@@ -1,0 +1,46 @@
+# Global parameters 
+random.seed 1234567909
+
+################### Network ===========================
+network
+{
+	size 10
+	node peersim.core.GeneralNode
+}
+
+################### Simulation ===========================
+simulation
+{ 
+	cycles 15
+}
+
+################### Protocols ===========================
+protocol.lnk peersim.core.IdleProtocol
+
+protocol.DVProtocol DVProtocol.DVProtocol
+{
+	linkable lnk
+}
+
+################### Initialisation ======================
+init.rnd peersim.dynamics.WireKOut
+{
+	protocol lnk
+	k 2
+	undir
+}
+
+################### Controls ======================
+control.0 peersim.reports.GraphPrinter
+{
+	at 10
+	protocol lnk
+	undir
+	format dot
+	outf ./Result/dv
+}
+
+control.1 DVObserver
+{
+	protocol DVProtocol
+}
